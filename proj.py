@@ -35,7 +35,7 @@ NUM_ACTIVATED_SQUARES = 6
 PATTERN_PRESENTATION_TIME = 4  # seconds
 DELAY_TIME = 2  # seconds
 ACTIVATION_DURATION = PATTERN_PRESENTATION_TIME / NUM_ACTIVATED_SQUARES  # seconds per square
-NUM_TRIALS = 5  # Total number of trials
+NUM_TRIALS = 10  # Total number of trials
 FEEDBACK_DURATION = 3  # seconds
 
 # Audio settings for dual task
