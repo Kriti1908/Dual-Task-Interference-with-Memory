@@ -1,0 +1,6 @@
+name,age,gender,start_time,trial_index,is_dual_task,accuracy,reaction_time,high_tones_played,high_tones_detected,false_alarms,avg_reaction_time
+k,19,Female,2025-04-11 02:43:57,1,False,1.0,3.602571725845337,,,,
+k,19,Female,2025-04-11 02:43:57,2,True,0.5,5.434855937957764,1,1,0,0.40828728675842285
+k,19,Female,2025-04-11 02:43:57,3,False,1.0,4.9774603843688965,,,,
+k,19,Female,2025-04-11 02:43:57,4,True,1.0,3.438343048095703,0,0,0,0
+k,19,Female,2025-04-11 02:43:57,5,True,1.0,3.9003756046295166,1,1,0,0.45709943771362305

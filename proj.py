@@ -6,6 +6,7 @@ import os
 import datetime
 import numpy as np
 from pygame import mixer
+import csv
 
 # Initialize pygame
 pygame.init()
@@ -34,7 +35,7 @@ NUM_ACTIVATED_SQUARES = 6
 PATTERN_PRESENTATION_TIME = 4  # seconds
 DELAY_TIME = 2  # seconds
 ACTIVATION_DURATION = PATTERN_PRESENTATION_TIME / NUM_ACTIVATED_SQUARES  # seconds per square
-NUM_TRIALS = 10  # Total number of trials
+NUM_TRIALS = 5  # Total number of trials
 FEEDBACK_DURATION = 3  # seconds
 
 # Audio settings for dual task
@@ -219,36 +220,77 @@ def collect_user_info(screen):
     return user_info
 
 # Function to save results
-def save_results(user_info, trial_results):
-    data = {
-        "user_info": user_info,
-        "trial_results": trial_results
-    }
+# def save_results(user_info, trial_results):
+#     data = {
+#         "user_info": user_info,
+#         "trial_results": trial_results
+#     }
     
+#     # Create results directory if it doesn't exist
+#     if not os.path.exists("results"):
+#         os.makedirs("results")
+    
+#     # Check if file exists and load existing data
+#     filename = "results/memory_task_results.json"
+#     if os.path.exists(filename):
+#         with open(filename, 'r') as f:
+#             try:
+#                 existing_data = json.load(f)
+#             except json.JSONDecodeError:
+#                 existing_data = []
+#     else:
+#         existing_data = []
+    
+#     # Append new data
+#     if isinstance(existing_data, list):
+#         existing_data.append(data)
+#     else:
+#         existing_data = [existing_data, data]
+    
+#     # Save updated data
+#     with open(filename, 'w') as f:
+#         json.dump(existing_data, f, indent=4)
+def save_results(user_info, trial_results):
     # Create results directory if it doesn't exist
     if not os.path.exists("results"):
         os.makedirs("results")
     
-    # Check if file exists and load existing data
-    filename = "results/memory_task_results.json"
-    if os.path.exists(filename):
-        with open(filename, 'r') as f:
-            try:
-                existing_data = json.load(f)
-            except json.JSONDecodeError:
-                existing_data = []
-    else:
-        existing_data = []
+    # Define the CSV file path
+    filename = "results/memory_task_results.csv"
     
-    # Append new data
-    if isinstance(existing_data, list):
-        existing_data.append(data)
-    else:
-        existing_data = [existing_data, data]
+    # Check if the file exists
+    file_exists = os.path.isfile(filename)
     
-    # Save updated data
-    with open(filename, 'w') as f:
-        json.dump(existing_data, f, indent=4)
+    # Open the file in append mode
+    with open(filename, mode='a', newline='') as csvfile:
+        fieldnames = [
+            "name", "age", "gender", "start_time", "trial_index", "is_dual_task",
+            "accuracy", "reaction_time", "high_tones_played", "high_tones_detected",
+            "false_alarms", "avg_reaction_time"
+        ]
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        
+        # Write the header only if the file is new
+        if not file_exists:
+            writer.writeheader()
+        
+        # Write each trial result to the CSV file
+        for trial_index, trial in enumerate(trial_results):
+            row = {
+                "name": user_info["name"],
+                "age": user_info["age"],
+                "gender": user_info["gender"],
+                "start_time": user_info["start_time"],
+                "trial_index": trial_index + 1,
+                "is_dual_task": trial["is_dual_task"],
+                "accuracy": trial["accuracy"],
+                "reaction_time": trial["reaction_time"],
+                "high_tones_played": trial["dual_task_performance"]["high_tones_played"] if trial["is_dual_task"] else None,
+                "high_tones_detected": trial["dual_task_performance"]["high_tones_detected"] if trial["is_dual_task"] else None,
+                "false_alarms": trial["dual_task_performance"]["false_alarms"] if trial["is_dual_task"] else None,
+                "avg_reaction_time": trial["dual_task_performance"]["avg_reaction_time"] if trial["is_dual_task"] else None
+            }
+            writer.writerow(row)
 
 # Function to calculate accuracy between pattern and user selection
 def calculate_accuracy(pattern, user_selection, user_order):
