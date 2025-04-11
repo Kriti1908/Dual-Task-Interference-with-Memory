@@ -44,14 +44,14 @@ IMAGE_DATA = [
     },
     {
         "file": "image6.jpeg",
-        "question": "What sport is being played?",
-        "options": ["Football", "Basketball"],
+        "question": "What are you?",
+        "options": ["Idiot Sandwich", "Bored"],
         "correct_option": 1
     },
     {
         "file": "image7.jpg",
-        "question": "What are you?",
-        "options": ["Idiot Sandwich", "Bored"],
+        "question": "Red or blue pill?",
+        "options": ["Red", "Blue"],
         "correct_option": 0
     },
     {
