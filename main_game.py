@@ -17,71 +17,35 @@ IMAGE_DATA = [
         "options": ["Overwhelm", "Party"],
         "correct_option": 0  # 0-based index of the correct option
     },
+    # Add entries for all 12 images here
     {
         "file": "image2.jpeg",
         "question": "Who is in the image?",
         "options": ["Jethalal", "Bhide"],
         "correct_option": 0
     },
-    # Add entries for all 12 images here
     {
-        "file": "image3.jpg",
-        "question": "Movie?",
-        "options": ["Kahani", "3 Idiots"],
+        "file": "image3.jpeg",
+        "question": "What is shown in image?",
+        "options": ["Batch hoodie UG2k23", "Scam 2024"],
         "correct_option": 0
     },
     {
         "file": "image4.jpeg",
-        "question": "Us?",
-        "options": ["US!!", "You need therapy"],
+        "question": "Who is this character?",
+        "options": ["Pikachu", "Doraemon"],
         "correct_option": 1
     },
     {
         "file": "image5.jpeg",
-        "question": "...",
-        "options": ["HAHAHA", "haha"],
+        "question": "Name of trend?",
+        "options": ["Rick roll", "Ice Bucket challenge"],
         "correct_option": 0
     },
     {
         "file": "image6.jpeg",
         "question": "What are you?",
-        "options": ["Idiot Sandwich", "Bored"],
-        "correct_option": 1
-    },
-    {
-        "file": "image7.jpg",
-        "question": "Red or blue pill?",
-        "options": ["Red", "Blue"],
-        "correct_option": 0
-    },
-    {
-        "file": "image8.jpeg",
-        "question": "What is this?",
-        "options": ["Dog", "Frog"],
-        "correct_option": 1
-    },
-    {
-        "file": "image9.jpeg",
-        "question": "Pineapple on pizza?",
-        "options": ["Yayyy", "Nayyy"],
-        "correct_option": 0
-    },
-    {
-        "file": "image10.png",
-        "question": "Android or Iphone?",
-        "options": ["Iphone", "Android"],
-        "correct_option": 1
-    },
-    {
-        "file": "image11.jpeg",
-        "question": "?",
-        "options": ["yuh-uh", "nuh-uh"],
-        "correct_option": 0
-    },
-    {
-        "file": "image12.jpeg",
-        "question": "Did I make you smile?",
-        "options": ["Yes", "No"],
+        "options": ["Idiot Burger", "Idiot Sandwich"],
         "correct_option": 1
     }
 ]
@@ -120,8 +84,8 @@ NUM_ACTIVATED_SQUARES = 6
 PATTERN_PRESENTATION_TIME = 6  # seconds (changed from 4 to 6)
 DELAY_TIME = 2  # seconds
 ACTIVATION_DURATION = PATTERN_PRESENTATION_TIME / NUM_ACTIVATED_SQUARES  # seconds per square
-NUM_TRIALS = 10  # Total number of actual trials (excluding practice)
-NUM_PRACTICE_TRIALS = 2  # Number of practice trials
+NUM_TRIALS = 5  # Total number of actual trials (excluding practice)
+NUM_PRACTICE_TRIALS = 1  # Number of practice trials
 FEEDBACK_DURATION = 3  # seconds
 
 # Font setup
@@ -401,7 +365,7 @@ def save_results(user_info, trial_results):
     if not os.path.exists("results"):
         os.makedirs("results")
     
-    filename = "results/memory_task_results.csv"
+    filename = "results/dual_task_data.csv"
     file_exists = os.path.isfile(filename)
     
     with open(filename, mode='a', newline='') as csvfile:
@@ -769,13 +733,13 @@ def main():
         "Try to remember both the positions AND the order they appear.",
         "After a short delay, you'll see an image with a question.",
         "After answering the question, you'll need to reproduce the pattern.",
-        "We'll start with 2 practice rounds to help you get familiar."
+        "We'll start with 1 practice round to help you get familiar."
     ]
     
     for i, line in enumerate(instructions):
         draw_text(screen, line, 24, WINDOW_WIDTH // 2, 280 + i * 40, WHITE)
     
-    draw_text(screen, "Press any key to start the practice rounds", 30, WINDOW_WIDTH // 2, 550, LIGHT_BLUE)
+    draw_text(screen, "Press any key to start the practice round", 30, WINDOW_WIDTH // 2, 550, LIGHT_BLUE)
     pygame.display.flip()
     
     waiting = True
@@ -806,7 +770,7 @@ def main():
     pygame.draw.rect(screen, NAVY_BLUE, (0, 0, WINDOW_WIDTH, 100))
     draw_text(screen, "Memory Task Experiment", 36, WINDOW_WIDTH // 2, 50, GOLD)
     draw_text(screen, "Practice complete", 48, WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2 - 50, WHITE)
-    draw_text(screen, "Now starting the actual experiment", 36, WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2 + 50, LIGHT_BLUE)
+    draw_text(screen, "Now starting the actual experiment (5 trials)", 36, WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2 + 50, LIGHT_BLUE)
     pygame.display.flip()
     pygame.time.delay(2000)
     
